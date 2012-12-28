@@ -1,3 +1,4 @@
+var pdfDocument = require("pdfkit");
 
 var seperators = [".", "-", "/", ":", ";", "[", ")", "[", "]", "{", "}"];
 var wsSeperators = [".", "-", "/"];
@@ -25,6 +26,11 @@ function main(){
 	}
 
 	var text = process.argv[2];	
+	var outputFilename = "output.pdf";
+
+	if(process.argv.length == 4){
+		outputFilename = process.argv[3];
+	}
 
 	var currentNumberDecoratorIndex = -1;
 	var previousCharWasDigit = false;
@@ -60,7 +66,17 @@ function main(){
 	if(previousCharWasDigit){
 		outputText += numberDecorators[currentNumberDecoratorIndex][1];
 	}
-	console.log(outputText);
+	createDocument(outputFilename, outputText);
+}
+
+function createDocument(filename, text){
+	var doc = new pdfDocument();
+
+	doc.font("../fonts/SourceCodePro-Regular.ttf", 100, 100)
+		.fontSize(25)
+		.text(text);
+
+	doc.write(filename);
 }
 
 function isWhitespace(c){
