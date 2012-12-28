@@ -1,10 +1,10 @@
 
 var seperators = [".", "-", "/", ":", ";", "[", ")", "[", "]", "{", "}"];
 var wsSeperators = [".", "-", "/"];
-var numberSeperators = {
-	"[" : "]",
-	"(" : ")"
-};
+var numberDecorators = [
+	["[", "]"],
+	["(", ")"]
+];
 
 var colors = {
 	"blue" : [86, 197, 208], 
@@ -26,7 +26,7 @@ function main(){
 
 	var text = process.argv[2];	
 
-	var currentNumberDecorator = null;
+	var currentNumberDecoratorIndex = -1;
 	var previousCharWasDigit = false;
 
 	var outputText = "";
@@ -39,9 +39,26 @@ function main(){
 			var replacingChar = wsSeperators[replacingCharIndex];
 			outputText += replacingChar;
 		}
+		else if(!previousCharWasDigit && !isNaN(currentChar)){
+			currentNumberDecoratorIndex = (Math.random() * numberDecorators.length | 0);
+			var decoratorChar = numberDecorators[currentNumberDecoratorIndex][0];
+			outputText += decoratorChar;
+			outputText += currentChar;
+			previousCharWasDigit = true;
+		}
+		else if(previousCharWasDigit && isNaN(currentChar)){
+			outputText += currentChar;
+			outputText += numberDecorators[currentNumberDecoratorIndex][1];
+			previousCharWasDigit = false;
+			currentNumberDecoratorIndex = -1;
+		}
 		else{
 			outputText += currentChar;
 		}
+	}
+
+	if(previousCharWasDigit){
+		outputText += numberDecorators[currentNumberDecoratorIndex][1];
 	}
 	console.log(outputText);
 }
