@@ -7,6 +7,4 @@ This small piece of software generates text.
 Dependencies
 =============
 
-``` shell
- (https://github.com/devongovett/pdfkit "pdfkit")
- ```
+(https://github.com/devongovett/pdfkit "pdfkit")
