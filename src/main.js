@@ -1,11 +1,4 @@
 var pdfDocument = require("pdfkit");
-// var argv = require('optimist')
-//     .usage('Count the lines in a file.\nUsage: $0')
-//     .demand('f')
-//     .alias('f', 'file')
-//     .describe('f', 'Load a file')
-//     .argv
-// ;
 
 var argv = require('optimist')
  			.usage("$0 -t [your text] -c [color] -f [output filename]")
