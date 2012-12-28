@@ -1,4 +1,21 @@
 var pdfDocument = require("pdfkit");
+// var argv = require('optimist')
+//     .usage('Count the lines in a file.\nUsage: $0')
+//     .demand('f')
+//     .alias('f', 'file')
+//     .describe('f', 'Load a file')
+//     .argv
+// ;
+
+var argv = require('optimist')
+ 			.usage("$0 -t [your text] -c [color] -f [output filename]")
+ 			.demand(["t"])
+ 			.describe("t", "Your input text")
+ 			.describe("c", "Outputtext color")
+ 			.describe("f", "Outputfile name")
+ 			.default("f", "output.pdf")
+ 			.default("c", "white")
+ 			.argv;
 var seperators = [".", "-", "/", ":", ";", "[", ")", "[", "]", "{", "}"];
 var wsSeperators = [".", "-", "/"];
 var numberDecorators = [
@@ -20,17 +37,9 @@ var background = "#000532";
 
 function main(){
 
-	if(process.argv.length < 3){
-		usage();
-		return;
-	}
-
-	var text = process.argv[2];	
-	var outputFilename = "output.pdf";
-
-	if(process.argv.length == 4){
-		outputFilename = process.argv[3];
-	}
+	var text = argv.t;	
+	var outputFilename = argv.f;
+	var textColor = argv.c;
 
 	var currentNumberDecoratorIndex = -1;
 	var previousCharWasDigit = false;
@@ -84,10 +93,6 @@ function createDocument(filename, text){
 
 function isWhitespace(c){
 	return /\s/.test(c);
-}
-
-function usage(){
-
 }
 
 main();
