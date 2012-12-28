@@ -1,5 +1,4 @@
 var pdfDocument = require("pdfkit");
-
 var seperators = [".", "-", "/", ":", ";", "[", ")", "[", "]", "{", "}"];
 var wsSeperators = [".", "-", "/"];
 var numberDecorators = [
@@ -8,15 +7,16 @@ var numberDecorators = [
 ];
 
 var colors = {
-	"blue" : [86, 197, 208], 
-	"red" : [237, 26, 59], 
-	"green" : [0, 178, 107], 
-	"orange" : [247, 148, 51], 
-	"purple" : [109, 104, 175],
-	"white" : [255, 255,255]
+	"blue" : "#56C5D0", 
+	"red" : "#ED1A3B", 
+	"green" : "#00B26B", 
+	"orange" : "#F79433",
+	"purple" : "#6D68AF",
+	"white" : "#FFFFFF"
 };
 
-var background = [0, 5, 50];
+//var background = [0, 5, 50];
+var background = "#000532";
 
 function main(){
 
@@ -70,10 +70,13 @@ function main(){
 }
 
 function createDocument(filename, text){
-	var doc = new pdfDocument();
+	var doc = new pdfDocument({"size" : "a4", "layout" : "landscape"});
 
-	doc.font("../fonts/SourceCodePro-Regular.ttf", 100, 100)
-		.fontSize(25)
+	doc.rect(0,0, 1500, 1500)
+		.fillAndStroke(background);
+	doc.font("../fonts/SourceCodePro-Regular.ttf")
+		.fontSize(32)
+		.fillAndStroke(colors.purple)
 		.text(text);
 
 	doc.write(filename);
